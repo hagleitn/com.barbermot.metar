@@ -18,7 +18,7 @@ import java.util.List;
 
 import com.barbermot.metar.R;
 
-public class MetarProvider extends AppWidgetProvider {
+public class WxProvider extends AppWidgetProvider {
 	
 	final static String TAG = "MetarProvider";
 	
@@ -36,7 +36,7 @@ public class MetarProvider extends AppWidgetProvider {
             RemoteViews updateViews = buildUpdate(this);
 
             // Push update for this widget to the home screen
-            ComponentName thisWidget = new ComponentName(this, MetarProvider.class);
+            ComponentName thisWidget = new ComponentName(this, WxProvider.class);
             AppWidgetManager manager = AppWidgetManager.getInstance(this);
             manager.updateAppWidget(thisWidget, updateViews);
         }
@@ -47,7 +47,7 @@ public class MetarProvider extends AppWidgetProvider {
             RemoteViews updateViews = null;
             
             StringBuffer buf = new StringBuffer();
-    		for (Metar m: getMetars()) {
+    		for (Station m: getMetars()) {
     			buf.append(m.getWx());
     			buf.append("\n\n");
     		}
@@ -83,11 +83,11 @@ public class MetarProvider extends AppWidgetProvider {
             return null;
         }
         
-        private List<Metar> getMetars() {
-    		List<Metar> l = new ArrayList<Metar>(1);
-    		l.add(new Metar("KSFO"));
-    		l.add(new Metar("KSJC"));
-    		l.add(new Metar("KRHV"));
+        private List<Station> getMetars() {
+    		List<Station> l = new ArrayList<Station>(1);
+    		l.add(new Station("KSFO"));
+    		l.add(new Station("KSJC"));
+    		l.add(new Station("KRHV"));
     		return l;
     	}
     }

@@ -7,13 +7,13 @@
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
     <application android:icon="@drawable/icon" android:label="@string/app_name">
-    	<receiver android:name=".MetarProvider">
+    	<receiver android:name="WxProvider">
     	    <meta-data android:name="android.appwidget.provider"
 				android:resource="@xml/widget_info" />
 			<intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
 		</receiver>
-		<service android:name="MetarProvider$UpdateService"/>
+		<service android:name="WxProvider$UpdateService"/>
     </application>
 </manifest>

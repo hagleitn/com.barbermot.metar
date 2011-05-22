@@ -8,14 +8,14 @@ import org.apache.commons.net.ftp.FTPClient;
 
 import android.util.Log;
 
-public class Metar {
+public class Station {
 	String id;
 	String weather;
 	final String noaa = "tgftp.nws.noaa.gov";
 	final String path = "/data/observations/metar/stations/";
 	final String TAG = "Metar";
 	
-	public Metar(String id) {
+	public Station(String id) {
 		this.id = id;
 		update();
 	}
