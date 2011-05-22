@@ -105,7 +105,6 @@ public class Station {
 		    Log.e(TAG,"ftp problem",e);
 		}
 
-
 		try
 		{
 			if (is != null) {
