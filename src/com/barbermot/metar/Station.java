@@ -46,6 +46,27 @@ public class Station {
 		return id;
 	}
 	
+	public void update() {
+		metar = readWxString(metarPath);
+		taf = readWxString(tafPath);
+		if (taf == null) {
+			hasForecast = false;
+		} else {
+			hasForecast = true;
+		}
+	}
+	
+	@Override
+	public String toString() {
+		StringBuffer buf = new StringBuffer();
+		buf.append(getMetar());
+		if (hasForecast()) {
+			buf.append("\n");
+			buf.append(getTaf());
+		}
+		return buf.toString();
+	}
+	
 	private String readWxString(InputStream is) throws IOException {
 		String wx = new Scanner(is).useDelimiter("\\A").next();
 		Log.d(TAG, "read done");
@@ -98,26 +119,5 @@ public class Station {
 			Log.e(TAG,"ftp logout problem",e);
 		}		
 		return res;
-	}
-	
-	public void update() {
-		metar = readWxString(metarPath);
-		taf = readWxString(tafPath);
-		if (taf == null) {
-			hasForecast = false;
-		} else {
-			hasForecast = true;
-		}
-	}
-	
-	@Override
-	public String toString() {
-		StringBuffer buf = new StringBuffer();
-		buf.append(getMetar());
-		if (hasForecast()) {
-			buf.append("\n");
-			buf.append(getTaf());
-		}
-		return buf.toString();
 	}
 }

@@ -9,10 +9,10 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
+//import android.content.res.Resources;
 import android.os.IBinder;
-import android.os.SystemClock;
-import android.util.Log;
+//import android.os.SystemClock;
+//import android.util.Log;
 import android.widget.RemoteViews;
 import java.util.List;
 
@@ -68,12 +68,12 @@ public class WxProvider extends AppWidgetProvider {
                         0 , defineIntent, 0 );
                
                 updateViews.setOnClickPendingIntent(R.id.widget, pendingIntent); */
-    
-            } else {
+   
+            } /*else {
                 // Didn't find word of day, so show error message
                 updateViews = new RemoteViews(context.getPackageName(), R.layout.main);
                 updateViews.setTextViewText(R.id.metar_text, "Unable");
-            }
+            }*/
             return updateViews;
         }
 
