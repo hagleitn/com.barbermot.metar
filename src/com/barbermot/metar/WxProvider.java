@@ -20,7 +20,7 @@ import com.barbermot.metar.R;
 
 public class WxProvider extends AppWidgetProvider {
 	
-	final static String TAG = "MetarProvider";
+	final static String TAG = "WxProvider";
 	
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,
@@ -48,7 +48,7 @@ public class WxProvider extends AppWidgetProvider {
             
             StringBuffer buf = new StringBuffer();
     		for (Station m: getMetars()) {
-    			buf.append(m.getWx());
+    			buf.append(m);
     			buf.append("\n\n");
     		}
     		
@@ -86,7 +86,6 @@ public class WxProvider extends AppWidgetProvider {
         private List<Station> getMetars() {
     		List<Station> l = new ArrayList<Station>(1);
     		l.add(new Station("KSFO"));
-    		l.add(new Station("KSJC"));
     		l.add(new Station("KRHV"));
     		return l;
     	}
