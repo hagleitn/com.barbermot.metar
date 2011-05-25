@@ -41,9 +41,9 @@ public class WxProvider extends AppWidgetProvider {
             manager.updateAppWidget(thisWidget, updateViews);
         }
 
-        public RemoteViews buildUpdate(Context context) {
+        public static RemoteViews buildUpdate(Context context) {
         	
-        	StationChooser chooser = new StationChooser();
+        	StationChooser chooser = new StationChooser(context);
             RemoteViews updateViews = null;
             
             List<Station> stations = chooser.choose(context);

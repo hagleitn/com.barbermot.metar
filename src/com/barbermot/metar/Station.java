@@ -18,12 +18,14 @@ public class Station {
 	String taf = null;
 	
 	boolean hasForecast = false;
+	boolean showForecast = true;
 	
 	String metarPath;
 	String tafPath;
 	final String TAG = "Station";
 	
-	public Station(String id) {
+	public Station(String id, boolean showForecast) {
+		this.showForecast = showForecast;
 		this.id = id;
 		metarPath = String.format(metarPathTemplate, id);
 		tafPath = String.format(tafPathTemplate, id);
@@ -61,7 +63,7 @@ public class Station {
 	public String toString() {
 		StringBuffer buf = new StringBuffer();
 		buf.append(getMetar());
-		if (hasForecast()) {
+		if (hasForecast() && showForecast) {
 			buf.append("\n");
 			buf.append(getTaf());
 		}

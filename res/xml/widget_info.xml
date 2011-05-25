@@ -3,6 +3,7 @@
     android:minWidth="240dp"
     android:minHeight="300dp"
     android:updatePeriodMillis="1800000"
+    android:configure="com.barbermot.metar.Preferences"
     android:initialLayout="@layout/main"
     >
 </appwidget-provider>

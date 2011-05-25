@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<EditTextPreference
+                android:summary="Please enter station"
+                android:defaultValue="KSFO"
+                android:title="First metar station"
+                android:key="station_1" />
+    <CheckBoxPreference android:title="Show TAF"
+		android:defaultValue="true" android:summary="Show/Hide TAF (if available)"
+		android:key="show_taf_1" />
+	<EditTextPreference
+                android:summary="Please enter station"
+                android:defaultValue="KSJC"
+                android:title="Second metar station"
+                android:key="station_2" />
+    <CheckBoxPreference android:title="Show TAF"
+		android:defaultValue="false" android:summary="Show/Hide TAF (if available)"
+		android:key="show_taf_2" />
+	<EditTextPreference
+                android:summary="Please enter station"
+                android:defaultValue="KRHV"
+                android:title="Third metar station"
+                android:key="station_3" />
+    <CheckBoxPreference android:title="Show TAF"
+		android:defaultValue="false" android:summary="Show/Hide TAF (if available)"
+		android:key="show_taf_3" />
+	<EditTextPreference
+                android:summary="Please enter station"
+                android:defaultValue="KLVK"
+                android:title="Fourth metar station"
+                android:key="station_4" />
+    <CheckBoxPreference android:title="Show TAF"
+		android:defaultValue="false" android:summary="Show/Hide TAF (if available)"
+		android:key="show_taf_4" />
+	<Preference
+                android:title="Click here to continue..."
+                android:summary=""
+                android:key="okButton" />
+</PreferenceScreen>
