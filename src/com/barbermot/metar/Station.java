@@ -47,11 +47,12 @@ public class Station {
 	}
 	
 	public void update() {
-		metar = readWxString(metarPath);
+		metar = readWxString(metarPath).trim();
 		taf = readWxString(tafPath);
 		if (taf == null) {
 			hasForecast = false;
 		} else {
+			taf = taf.trim();
 			hasForecast = true;
 		}
 	}

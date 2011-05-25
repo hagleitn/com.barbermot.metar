@@ -21,7 +21,6 @@ public class WxProvider extends AppWidgetProvider {
 	
 	public WxProvider() {
 		Log.d(TAG,"New provider started.");
-		
 	}
 	
     @Override
@@ -64,10 +63,6 @@ public class WxProvider extends AppWidgetProvider {
                 
                 if (stations.size() > 3) {
                 	updateViews.setTextViewText(R.id.metar_text04, stations.get(3).toString());
-                }
-                
-                if (stations.size() > 4) {
-                	updateViews.setTextViewText(R.id.metar_text05, stations.get(4).toString());
                 }
                 
                 switch(chooser.getStatus()) {
