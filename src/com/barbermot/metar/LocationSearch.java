@@ -16,6 +16,9 @@ import android.util.Log;
 public class LocationSearch {
 	
 	private final String TAG = "LocationSearch";
+	private final int MAX_STATIONS = 10;
+	private final int[] xDeltas = {0,-3,-3,0,3,3,3,0,-3};
+	private final int[] yDeltas = {0,0,3,3,3,0,-3,-3,-3};
 	
 	private class Loc implements Comparable<Loc> {
 		public String name;
@@ -54,9 +57,13 @@ public class LocationSearch {
 		x = Math.abs(x);
 		y = (y/3)*3;
 		x = (x/3)*3;
-		String file = String.format("l_%02d%s_%03d%s", y,sn,x,ew);
-		Log.d(TAG,"Using file: "+file);
-		l.add(file);
+		
+		for (int i = 0; i < 9; i++) {
+			String file = String.format("l_%02d%s_%03d%s", y+yDeltas[i],sn,x+xDeltas[i],ew);
+			Log.d(TAG,"Using file: "+file);
+			l.add(file);
+		}
+		
 		return l;
 		
 	}
@@ -119,10 +126,10 @@ public class LocationSearch {
 				
 				l.setDist(loc);
 				
-				if (stations.size() < 5 || tail.compareTo(l) > 0) {
+				if (stations.size() < MAX_STATIONS || tail.compareTo(l) > 0) {
 					Log.d(TAG,"Adding "+l);
 					stations.add(l);
-					if (stations.size() > 5) {
+					if (stations.size() > MAX_STATIONS) {
 						tail = stations.last();
 						Log.d(TAG,"Removing"+tail);
 						stations.remove(tail);

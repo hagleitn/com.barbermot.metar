@@ -18,6 +18,8 @@ public class StationChooser {
 	Status status = Status.DEFAULT;
 	LocationSearch ls;
 	LocationStrategy locStrategy;
+	boolean useLocation = true;
+	boolean showTaf = true;
 
 	List<String> defStations = new ArrayList<String>();
 	List<Station> locStations = new ArrayList<Station>();
@@ -26,12 +28,13 @@ public class StationChooser {
 		locStrategy = new LocationStrategy(context);
 		ls = new LocationSearch();
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		if (null != prefs.getString("station_4",null)) {
-			defStations.add(prefs.getString("station_1", ""));
-			defStations.add(prefs.getString("station_2", ""));
-			defStations.add(prefs.getString("station_3", ""));
-			defStations.add(prefs.getString("station_4", ""));
+		String[] st = prefs.getString("stations","").split(",");
+		for (String s: st) {
+			defStations.add(s.trim());
 		}
+		
+		useLocation = prefs.getBoolean("use_location", true);
+		showTaf = prefs.getBoolean("show_taf", true);
 	}
 	
 	public Status getStatus() {
@@ -39,8 +42,13 @@ public class StationChooser {
 	}
 	
 	public List<Station> choose(Context context) {
-		Location loc = LocationStrategy.getQuickLocation(context);
-		Log.d(TAG,"Location: "+loc);
+		
+		Location loc = null;
+		
+		if (useLocation) {
+			loc = LocationStrategy.getQuickLocation(context);
+			Log.d(TAG,"Location: "+loc);
+		}
 		
 		List<String> names;
 		if (loc == null) {
@@ -53,7 +61,7 @@ public class StationChooser {
 		
 		locStations.clear();
 		for (String name: names) {
-			locStations.add(new Station(name,true));
+			locStations.add(new Station(name,showTaf));
 		}
 		return locStations;
 	}

@@ -9,6 +9,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.view.View;
 import android.widget.RemoteViews;
 import java.util.List;
 import android.util.Log;
@@ -60,20 +61,18 @@ public class WxProvider extends AppWidgetProvider {
             if (true) {
                 updateViews = new RemoteViews(context.getPackageName(), R.layout.main);
 
-                if (stations.size() > 0) {
-                	updateViews.setTextViewText(R.id.metar_text01, stations.get(0).toString());
-                }
-                
-                if (stations.size() > 1) {
-                	updateViews.setTextViewText(R.id.metar_text02, stations.get(1).toString());
-                }
-                
-                if (stations.size() > 2) {
-                	updateViews.setTextViewText(R.id.metar_text03, stations.get(2).toString());
-                }
-                
-                if (stations.size() > 3) {
-                	updateViews.setTextViewText(R.id.metar_text04, stations.get(3).toString());
+                int i = 0;
+                int lines = 0;
+                for (Station s: stations) {
+                	String desc = s.toString();
+                	lines += desc.split("\r\n|\r|\n").length+1;
+                	if (i > 10 || lines > 27) {
+                		break;
+                	}
+                	updateViews.setTextViewText(R.id.metar_text01+2*i, s.toString());
+                	updateViews.setInt(R.id.metar_text01+2*i, "setVisibility", View.VISIBLE);
+                	updateViews.setInt(R.id.metar_text01+2*i+1, "setVisibility", View.VISIBLE);
+                	i++;
                 }
                 
                 switch(chooser.getStatus()) {
@@ -83,7 +82,7 @@ public class WxProvider extends AppWidgetProvider {
                 case LOCATION:
                 	updateViews.setTextViewText(R.id.location_status, "Location available");
                 	break;
-                }                
+                }      
             }
             return updateViews;
         }
