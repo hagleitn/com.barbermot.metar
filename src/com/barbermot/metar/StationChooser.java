@@ -16,16 +16,21 @@ public class StationChooser {
 	
 	enum Status {DEFAULT, LOCATION};
 	Status status = Status.DEFAULT;
+	LocationSearch ls;
+	LocationStrategy locStrategy;
 
-	List<Station> stations = new ArrayList<Station>();
+	List<String> defStations = new ArrayList<String>();
+	List<Station> locStations = new ArrayList<Station>();
 	
 	public StationChooser(Context context) {
+		locStrategy = new LocationStrategy(context);
+		ls = new LocationSearch();
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		if (null != prefs.getString("station_4",null)) {
-			stations.add(new Station(prefs.getString("station_1", ""), prefs.getBoolean("show_taf_1", true)));
-			stations.add(new Station(prefs.getString("station_2", ""), prefs.getBoolean("show_taf_2", true)));
-			stations.add(new Station(prefs.getString("station_3", ""), prefs.getBoolean("show_taf_3", true)));
-			stations.add(new Station(prefs.getString("station_4", ""), prefs.getBoolean("show_taf_4", true)));
+			defStations.add(prefs.getString("station_1", ""));
+			defStations.add(prefs.getString("station_2", ""));
+			defStations.add(prefs.getString("station_3", ""));
+			defStations.add(prefs.getString("station_4", ""));
 		}
 	}
 	
@@ -37,14 +42,20 @@ public class StationChooser {
 		Location loc = LocationStrategy.getQuickLocation(context);
 		Log.d(TAG,"Location: "+loc);
 		
+		List<String> names;
 		if (loc == null) {
 			status = Status.DEFAULT;
-			return stations;
+			names = defStations;
+		} else {
+			status = Status.LOCATION;
+			names = ls.search(context, loc);
 		}
 		
-		// TODO: Find closest
-		status = Status.LOCATION;
-		return stations;
+		locStations.clear();
+		for (String name: names) {
+			locStations.add(new Station(name,true));
+		}
+		return locStations;
 	}
 	
 }

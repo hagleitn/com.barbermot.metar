@@ -28,9 +28,19 @@ public class WxProvider extends AppWidgetProvider {
         int[] appWidgetIds) {
     	Log.d(TAG,"Update");
         context.startService(new Intent(context, UpdateService.class));
+        Log.d(TAG, "Update done.");
     }
 
     public static class UpdateService extends Service {
+    	static StationChooser chooser;
+    	
+    	public static StationChooser getChooser(Context context) {
+    		if (chooser != null) {
+    			return chooser;
+    		}
+    		return chooser = new StationChooser(context);
+    	}
+    	
         @Override
         public void onStart(Intent intent, int startId) {
             RemoteViews updateViews = buildUpdate(this);
@@ -42,8 +52,7 @@ public class WxProvider extends AppWidgetProvider {
         }
 
         public static RemoteViews buildUpdate(Context context) {
-        	
-        	StationChooser chooser = new StationChooser(context);
+        	chooser = getChooser(context);
             RemoteViews updateViews = null;
             
             List<Station> stations = chooser.choose(context);
@@ -51,7 +60,9 @@ public class WxProvider extends AppWidgetProvider {
             if (true) {
                 updateViews = new RemoteViews(context.getPackageName(), R.layout.main);
 
-                updateViews.setTextViewText(R.id.metar_text01, stations.get(0).toString());
+                if (stations.size() > 0) {
+                	updateViews.setTextViewText(R.id.metar_text01, stations.get(0).toString());
+                }
                 
                 if (stations.size() > 1) {
                 	updateViews.setTextViewText(R.id.metar_text02, stations.get(1).toString());

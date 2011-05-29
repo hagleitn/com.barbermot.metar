@@ -49,7 +49,13 @@ public class Station {
 	}
 	
 	public void update() {
-		metar = readWxString(metarPath).trim();
+		metar = readWxString(metarPath);
+		if (metar != null) {
+			metar = metar.trim();
+		} else {
+			metar = this.id+": No weather data";
+		}
+		
 		taf = readWxString(tafPath);
 		if (taf == null) {
 			hasForecast = false;
