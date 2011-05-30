@@ -31,14 +31,6 @@ public class LocationStrategy implements LocationListener {
 		this.context = ctx;
 		
 		LocationManager mgr = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
-		
-		//currentLocation = mgr.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-		//Location cand = mgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		
-		//if (this.isBetterLocation(cand, currentLocation)) {
-		//	currentLocation = cand;
-		//}
-		
 		mgr.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, DELTA_TIME, DELTA_DIST, this);
 	}
 	

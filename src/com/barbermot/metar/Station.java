@@ -18,6 +18,7 @@ public class Station {
 	String taf = null;
 	
 	boolean hasForecast = false;
+	boolean hasObservation = false;
 	boolean showForecast = true;
 	
 	String metarPath;
@@ -44,6 +45,10 @@ public class Station {
 		return hasForecast;
 	}
 	
+	public boolean hasObservation() {
+		return hasObservation;
+	}
+	
 	public String getId() {
 		return id;
 	}
@@ -52,8 +57,10 @@ public class Station {
 		metar = readWxString(metarPath);
 		if (metar != null) {
 			metar = metar.trim();
+			hasObservation = true;
 		} else {
 			metar = this.id+": No weather data";
+			hasObservation = false;
 		}
 		
 		taf = readWxString(tafPath);
