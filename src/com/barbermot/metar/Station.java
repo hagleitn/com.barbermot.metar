@@ -63,12 +63,16 @@ public class Station {
 			hasObservation = false;
 		}
 		
-		taf = readWxString(tafPath);
-		if (taf == null) {
-			hasForecast = false;
+		if (this.showForecast) {
+			taf = readWxString(tafPath);
+			if (taf == null) {
+				hasForecast = false;
+			} else {
+				taf = taf.trim();
+				hasForecast = true;
+			}
 		} else {
-			taf = taf.trim();
-			hasForecast = true;
+			hasForecast = false;
 		}
 	}
 	
@@ -85,7 +89,6 @@ public class Station {
 	
 	private String readWxString(InputStream is) throws IOException {
 		String wx = new Scanner(is).useDelimiter("\\A").next();
-		Log.d(TAG, "read done");
 
 		int idx = wx.indexOf('\n');
 		wx = wx.substring(idx == -1?0:idx);
@@ -116,7 +119,7 @@ public class Station {
 		        }
 		    }
 		}
-		catch (Exception e)
+		catch (IOException e)
 		{
 		    Log.e(TAG,"ftp problem",e);
 		}

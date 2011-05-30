@@ -92,7 +92,6 @@ public class LocationSearch {
 				l.name = scan.next();
 				
 				tmp = scan.next();
-				Log.d(TAG,"Latitude: "+tmp);
 				if (tmp.contains("S")) {
 					tmp = tmp.replace("S", "");
 					Log.d(TAG,tmp);
@@ -100,7 +99,6 @@ public class LocationSearch {
 					l.y *= -1;
 				} else if (tmp.contains("N")) {
 					tmp = tmp.replaceAll("N", "");
-					Log.d(TAG,tmp);
 					l.y = Float.parseFloat(tmp);
 				} else {
 					Log.d(TAG, "Failed to parse float..."+tmp);
@@ -108,10 +106,8 @@ public class LocationSearch {
 				}
 				
 				tmp = scan.next();
-				Log.d(TAG,"Longitude: "+tmp);
 				if (tmp.contains("W")) {
 					tmp = tmp.replace("W", "");
-					Log.d(TAG,tmp);
 					l.x = Float.parseFloat(tmp);
 					l.x *= -1;
 				} else if (tmp.contains("E")) {
@@ -127,13 +123,10 @@ public class LocationSearch {
 				l.setDist(loc);
 				
 				if (stations.size() < MAX_STATIONS || tail.compareTo(l) > 0) {
-					Log.d(TAG,"Adding "+l);
 					stations.add(l);
 					if (stations.size() > MAX_STATIONS) {
 						tail = stations.last();
-						Log.d(TAG,"Removing"+tail);
 						stations.remove(tail);
-						
 					} 
 					tail = stations.last();
 				}

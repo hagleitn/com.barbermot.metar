@@ -52,7 +52,6 @@ public class StationChooser {
 		Location loc = null;
 		
 		if (useLocation) {
-			Log.d(TAG, "Have cached loc: "+location);
 			if (location != null && 
 					System.currentTimeMillis()-this.location.getTime() < MAX_TIME_DELTA) {
 				loc = location;

@@ -34,14 +34,11 @@ public class WxProvider extends AppWidgetProvider {
     	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
     	boolean active = false;
     	for (int i :appWidgetIds) {
-    		Log.d(TAG,"ID: "+i);
     		active = active || prefs.getBoolean(Preferences.ACTIVE_KEY+appWidgetIds, false);
-    		Log.d(TAG,"Active?: "+active);
     	}
     	if (active) {
     		context.startService(new Intent(context, UpdateService.class));
     	}
-        Log.d(TAG, "Update done.");
     }
     
     @Override 

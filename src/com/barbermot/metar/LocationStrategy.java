@@ -39,11 +39,9 @@ public class LocationStrategy implements LocationListener {
 		LocationManager mgr = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
 		
 		String provider = mgr.getBestProvider(new Criteria(), true);
-		Log.d(TAG,"Best provider: "+provider);
 		
 		if (provider != null) {
 			tmp = mgr.getLastKnownLocation(provider);
-			Log.d(TAG,"Last known: "+tmp);
 		}
 		
 		return tmp;

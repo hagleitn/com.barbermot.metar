@@ -5,15 +5,12 @@ import com.barbermot.metar.WxProvider.UpdateService;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.Preference;
-import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.RemoteViews;
 
 public class Preferences extends PreferenceActivity {
 	
@@ -50,7 +47,6 @@ public class Preferences extends PreferenceActivity {
 		button.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 					public boolean onPreferenceClick(Preference preference) {
 						Context context = preference.getContext();
-						//WxProvider.UpdateService.buildUpdate(context);
 						Editor editor = preference.getEditor();
 						if (editor != null) {
 							editor.putBoolean(ACTIVE_KEY+appWidgetId, true);
