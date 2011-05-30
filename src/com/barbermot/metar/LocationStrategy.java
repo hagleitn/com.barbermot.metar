@@ -32,14 +32,14 @@ public class LocationStrategy implements LocationListener {
 		
 		LocationManager mgr = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
 		
-		currentLocation = mgr.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-		Location cand = mgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		//currentLocation = mgr.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+		//Location cand = mgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 		
-		if (this.isBetterLocation(cand, currentLocation)) {
-			currentLocation = cand;
-		}
+		//if (this.isBetterLocation(cand, currentLocation)) {
+		//	currentLocation = cand;
+		//}
 		
-		mgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, DELTA_TIME, DELTA_DIST, this);
+		mgr.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, DELTA_TIME, DELTA_DIST, this);
 	}
 	
 	public static Location getQuickLocation(Context ctx) {
@@ -87,6 +87,8 @@ public class LocationStrategy implements LocationListener {
 	protected boolean isBetterLocation(Location location, Location currentBestLocation) {
 	    if (currentBestLocation == null) {
 	        return true;
+	    } else if (location == null) {
+	    	return false;
 	    }
 
 	    // Check whether the new location fix is newer or older
