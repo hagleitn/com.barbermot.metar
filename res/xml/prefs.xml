@@ -14,5 +14,5 @@
 	<Preference
         android:title="Click here to continue..."
         android:summary=""
-        android:key="okButton" />
+        android:key="ok_button" />
 </PreferenceScreen>

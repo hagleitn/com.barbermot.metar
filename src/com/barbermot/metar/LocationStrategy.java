@@ -1,23 +1,35 @@
 package com.barbermot.metar;
 
+import com.barbermot.metar.WxProvider.UpdateService;
+
+import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.IInterface;
 import android.location.LocationManager;
 import android.util.Log;
 
 public class LocationStrategy implements LocationListener {
 	
 	public static final String TAG = "LocationStrategy";
+	public static final String KEY_LOCATION = "com.barbermot.metar.lat_lon";
 
-	private Location currentLocation;
+	private Location currentLocation = null;
 	private static final int DELTA = 1000 * 60 * 5;
-	private static final int DELTA_TIME = 1000 * 60;
-	private static final int DELTA_DIST = 0;
+	private static final int DELTA_TIME = 1000 * 60 * 5;
+	private static final int DELTA_DIST = 10 * 1000;
+	private Context context;
 	
 	public LocationStrategy(Context ctx) {
+		Log.d(TAG,"Started");
+		
+		this.context = ctx;
+		
 		LocationManager mgr = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
 		
 		currentLocation = mgr.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -27,7 +39,6 @@ public class LocationStrategy implements LocationListener {
 			currentLocation = cand;
 		}
 		
-		mgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, DELTA_TIME, DELTA_DIST, this);
 		mgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, DELTA_TIME, DELTA_DIST, this);
 	}
 	
@@ -50,16 +61,15 @@ public class LocationStrategy implements LocationListener {
 		return currentLocation;
 	}
 	
-	public synchronized void setLocation(Location loc) {
-		currentLocation = loc;
+	public synchronized void updateLocation(Context context, Location loc) {
 	}
 	
 	@Override
 	public void onLocationChanged(Location loc) {
 		Log.d(TAG, "location: "+loc);
-		if (this.isBetterLocation(loc, currentLocation)) {
-			setLocation(loc);
-		}
+		StationChooser.getChooser(context).setLocation(loc);
+		Intent i = new Intent(context, UpdateService.class);
+		context.startService(i);
 	}
 
 	@Override

@@ -18,23 +18,25 @@ public class StationChooser {
 	Status status = Status.DEFAULT;
 	LocationSearch ls;
 	LocationStrategy locStrategy;
-	boolean useLocation = true;
-	boolean showTaf = true;
-
-	List<String> defStations = new ArrayList<String>();
-	List<Station> locStations = new ArrayList<Station>();
+	static StationChooser chooser;
+	public final static long MAX_TIME_DELTA = 1000 * 60 * 60;
 	
-	public StationChooser(Context context) {
+	Location location = null;
+	
+	private StationChooser(Context context) {
 		locStrategy = new LocationStrategy(context);
 		ls = new LocationSearch();
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		String[] st = prefs.getString("stations","").split(",");
-		for (String s: st) {
-			defStations.add(s.trim());
+	}
+	
+	public static StationChooser getChooser(Context context) {
+		if (chooser != null) {
+			return chooser;
 		}
-		
-		useLocation = prefs.getBoolean("use_location", true);
-		showTaf = prefs.getBoolean("show_taf", true);
+		return chooser = new StationChooser(context);
+	}
+	
+	public void setLocation(Location loc) {
+		this.location = loc;
 	}
 	
 	public Status getStatus() {
@@ -42,24 +44,36 @@ public class StationChooser {
 	}
 	
 	public List<Station> choose(Context context) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		
+		boolean useLocation = prefs.getBoolean(Preferences.LOCATION_KEY, true);
+		boolean showTaf = prefs.getBoolean(Preferences.TAF_KEY, true);
+
 		Location loc = null;
 		
 		if (useLocation) {
-			loc = LocationStrategy.getQuickLocation(context);
+			Log.d(TAG, "Have cached loc: "+location);
+			if (location != null && 
+					System.currentTimeMillis()-this.location.getTime() < MAX_TIME_DELTA) {
+				loc = location;
+			}
 			Log.d(TAG,"Location: "+loc);
 		}
 		
 		List<String> names;
 		if (loc == null) {
+			names = new ArrayList<String>();
+			String[] st = prefs.getString(Preferences.STATION_KEY,"").split(",");
+			for (String s: st) {
+				names.add(s.trim());
+			}
 			status = Status.DEFAULT;
-			names = defStations;
 		} else {
 			status = Status.LOCATION;
 			names = ls.search(context, loc);
 		}
 		
-		locStations.clear();
+		List<Station> locStations = new ArrayList<Station>();
 		for (String name: names) {
 			locStations.add(new Station(name,showTaf));
 		}

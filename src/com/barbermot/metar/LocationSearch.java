@@ -16,7 +16,7 @@ import android.util.Log;
 public class LocationSearch {
 	
 	private final String TAG = "LocationSearch";
-	private final int MAX_STATIONS = 10;
+	private final int MAX_STATIONS = 8;
 	private final int[] xDeltas = {0,-3,-3,0,3,3,3,0,-3};
 	private final int[] yDeltas = {0,0,3,3,3,0,-3,-3,-3};
 	
