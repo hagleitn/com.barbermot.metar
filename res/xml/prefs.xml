@@ -6,10 +6,10 @@
                 android:title="Metar stations"
                 android:key="stations" />
     <CheckBoxPreference android:title="Show TAFs"
-		android:defaultValue="true" android:summary="Show/Hide TAF info (if available)"
+		android:defaultValue="true" android:summary="Show/Hide TAF information (if available)"
 		android:key="show_taf" />
 	<CheckBoxPreference android:title="Find stations"
-		android:defaultValue="true" android:summary="Use location information to automaticall find the closest stations."
+		android:defaultValue="true" android:summary="Use location information to automatically find the closest stations."
 		android:key="use_location" />
 	<Preference
         android:title="Click here to continue..."

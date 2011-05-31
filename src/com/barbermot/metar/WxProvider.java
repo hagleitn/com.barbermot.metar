@@ -14,6 +14,9 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.RemoteViews;
+
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.List;
 import android.util.Log;
 
@@ -65,7 +68,7 @@ public class WxProvider extends AppWidgetProvider {
             AppWidgetManager manager = AppWidgetManager.getInstance(this);
             manager.updateAppWidget(thisWidget, updateViews);
            
-            this.stopSelf();
+            //this.stopSelf();
         }
 
         public static RemoteViews buildUpdate(Context context) {
@@ -93,15 +96,21 @@ public class WxProvider extends AppWidgetProvider {
             	i++;
             }
             
+            Calendar cal = Calendar.getInstance();
+            DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT,
+                DateFormat.SHORT);
+            
+            String date = df.format(cal.getTime());
+
             if (i == 0) {
-            	updateViews.setTextViewText(R.id.location_status, "No data available at the moment.");
+            	updateViews.setTextViewText(R.id.location_status, "Last update: "+ date + ", no data available.");
             } else {
             	switch(chooser.getStatus()) {
             	case DEFAULT:
-            		updateViews.setTextViewText(R.id.location_status, "(Displaying default stations.)");
+            		updateViews.setTextViewText(R.id.location_status, "Last update: "+date+", default stations.");
             		break;
             	case LOCATION:
-            		updateViews.setTextViewText(R.id.location_status, "(Displaying closest stations.)");
+            		updateViews.setTextViewText(R.id.location_status, "Last update: "+date+", closest stations.");
             		break;
             	}
             }

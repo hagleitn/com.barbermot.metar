@@ -16,7 +16,7 @@ public class StationChooser {
 	
 	enum Status {DEFAULT, LOCATION};
 	Status status = Status.DEFAULT;
-	LocationSearch ls;
+	StationSearch ls;
 	LocationStrategy locStrategy;
 	static StationChooser chooser;
 	public final static long MAX_TIME_DELTA = 1000 * 60 * 60;
@@ -25,7 +25,7 @@ public class StationChooser {
 	
 	private StationChooser(Context context) {
 		locStrategy = new LocationStrategy(context);
-		ls = new LocationSearch();
+		ls = new StationSearch();
 	}
 	
 	public static StationChooser getChooser(Context context) {

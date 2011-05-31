@@ -13,7 +13,7 @@ import android.content.Context;
 import android.location.Location;
 import android.util.Log;
 
-public class LocationSearch {
+public class StationSearch {
 	
 	private final String TAG = "LocationSearch";
 	private final int MAX_STATIONS = 10;
